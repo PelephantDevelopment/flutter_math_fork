@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 
 import '../../ast/options.dart';
@@ -130,22 +129,27 @@ BuildResult makeBaseSymbol({
 Widget makeChar(String character, FontOptions font,
     CharacterMetrics? characterMetrics, MathOptions options,
     {bool needItalic = false}) {
-  final charWidget = ResetDimension(
-    height: characterMetrics?.height.cssEm.toLpUnder(options),
-    depth: characterMetrics?.depth.cssEm.toLpUnder(options),
-    child: RichText(
-      text: TextSpan(
-        text: character,
-        style: TextStyle(
-          fontFamily: 'packages/flutter_math_fork/KaTeX_${font.fontFamily}',
-          fontWeight: font.fontWeight,
-          fontStyle: font.fontShape,
-          fontSize: 1.0.cssEm.toLpUnder(options),
-          color: options.color,
+  final charWidget = GestureDetector(
+    onTap: () {
+      print("TABBED1");
+    },
+    child: ResetDimension(
+      height: characterMetrics?.height.cssEm.toLpUnder(options),
+      depth: characterMetrics?.depth.cssEm.toLpUnder(options),
+      child: RichText(
+        text: TextSpan(
+          text: character,
+          style: TextStyle(
+            fontFamily: 'packages/flutter_math_fork/KaTeX_${font.fontFamily}',
+            fontWeight: font.fontWeight,
+            fontStyle: font.fontShape,
+            fontSize: 1.0.cssEm.toLpUnder(options),
+            color: options.color,
+          ),
         ),
+        softWrap: false,
+        overflow: TextOverflow.visible,
       ),
-      softWrap: false,
-      overflow: TextOverflow.visible,
     ),
   );
   if (needItalic) {
