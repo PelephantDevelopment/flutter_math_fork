@@ -182,7 +182,7 @@ class SyntaxNode {
     }
     final childOptions = value.computeChildOptions(options);
 
-    final newChildBuildResults = _buildChildWidgets(childOptions);
+    final newChildBuildResults = _buildChildWidgets(childOptions, onTap: onTap);
 
     final bypassRebuild = value._oldOptions != null &&
         !value.shouldRebuildWidget(value._oldOptions!, options) &&
@@ -196,7 +196,8 @@ class SyntaxNode {
             value.buildWidget(options, newChildBuildResults, onTap: onTap));
   }
 
-  List<BuildResult?> _buildChildWidgets(List<MathOptions> childOptions) {
+  List<BuildResult?> _buildChildWidgets(List<MathOptions> childOptions,
+      {Function(int? index)? onTap}) {
     assert(children.length == childOptions.length);
     if (children.isEmpty) return const [];
     return List.generate(
@@ -205,7 +206,7 @@ class SyntaxNode {
               childOptions[index],
               onTap: (i) {
                 if (onTap != null) {
-                  onTap!(index);
+                  onTap(index);
                 }
               },
             ),

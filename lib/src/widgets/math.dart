@@ -159,6 +159,7 @@ class Math extends StatelessWidget {
     return Math(
       key: key,
       ast: ast,
+      onTap: onTap,
       parseError: parseError,
       options: options,
       onErrorFallback: onErrorFallback,
