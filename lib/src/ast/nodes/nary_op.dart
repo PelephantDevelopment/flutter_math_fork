@@ -50,7 +50,8 @@ class NaryOperatorNode extends SlotableNode<EquationRowNode?> {
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     final large =
         allowLargeOp && (options.style.size == MathStyle.display.size);
     final font = large

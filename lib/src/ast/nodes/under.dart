@@ -24,7 +24,8 @@ class UnderNode extends SlotableNode {
   // KaTeX's corresponding code is in /src/functions/utils/assembleSubSup.js
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     final spacing = options.fontMetrics.bigOpSpacing5.cssEm.toLpUnder(options);
     return BuildResult(
       italic: 0.0,

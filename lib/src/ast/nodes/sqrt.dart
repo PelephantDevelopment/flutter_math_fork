@@ -39,7 +39,8 @@ class SqrtNode extends SlotableNode {
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     final baseResult = childBuildResults[1]!;
     final indexResult = childBuildResults[0];
     return BuildResult(

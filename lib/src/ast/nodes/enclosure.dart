@@ -48,7 +48,8 @@ class EnclosureNode extends SlotableNode<EquationRowNode> {
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     final horizontalPadding = this.horizontalPadding.toLpUnder(options);
     final verticalPadding = this.verticalPadding.toLpUnder(options);
 

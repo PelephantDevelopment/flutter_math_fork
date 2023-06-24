@@ -35,18 +35,21 @@ class Math extends StatelessWidget {
   /// Requires either a parsed [ast] or a [parseError].
   ///
   /// See [Math] for its member documentation
-  const Math({
-    Key? key,
-    this.ast,
-    this.mathStyle = MathStyle.display,
-    this.logicalPpi,
-    this.onErrorFallback = defaultOnErrorFallback,
-    this.options,
-    this.parseError,
-    this.textScaleFactor,
-    this.textStyle,
-  })  : assert(ast != null || parseError != null),
+  const Math(
+      {Key? key,
+      this.ast,
+      this.mathStyle = MathStyle.display,
+      this.logicalPpi,
+      this.onErrorFallback = defaultOnErrorFallback,
+      this.options,
+      this.parseError,
+      this.textScaleFactor,
+      this.textStyle,
+      this.onTap})
+      : assert(ast != null || parseError != null),
         super(key: key);
+
+  final Function(int? index)? onTap;
 
   /// The equation to display.
   ///
@@ -140,11 +143,13 @@ class Math extends StatelessWidget {
     TexParserSettings settings = const TexParserSettings(),
     double? textScaleFactor,
     MathOptions? options,
+    Function(int? index)? onTap,
   }) {
     SyntaxTree? ast;
     ParseException? parseError;
     try {
-      ast = SyntaxTree(greenRoot: TexParser(expression, settings).parse());
+      ast = SyntaxTree(
+          greenRoot: TexParser(expression, settings).parse(), onTap: onTap);
     } on ParseException catch (e) {
       parseError = e;
     } on Object catch (e) {
@@ -198,7 +203,7 @@ class Math extends StatelessWidget {
     Widget child;
 
     try {
-      child = ast!.buildWidget(options);
+      child = ast!.buildWidget(options, onTap: onTap);
     } on BuildException catch (e) {
       return onErrorFallback(e);
     } on Object catch (e) {

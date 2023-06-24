@@ -11,14 +11,14 @@ import '../../font/metrics/font_metrics.dart';
 import '../layout/reset_dimension.dart';
 import 'make_composite.dart';
 
-BuildResult makeBaseSymbol({
-  required String symbol,
-  bool variantForm = false,
-  required AtomType atomType,
-  required Mode mode,
-  FontOptions? overrideFont,
-  required MathOptions options,
-}) {
+BuildResult makeBaseSymbol(
+    {required String symbol,
+    bool variantForm = false,
+    required AtomType atomType,
+    required Mode mode,
+    FontOptions? overrideFont,
+    required MathOptions options,
+    Function(int? index)? onTap}) {
   // First lookup the render config table. We need the information
   var symbolRenderConfig = symbolRenderConfigs[symbol];
   if (symbolRenderConfig != null) {
@@ -60,7 +60,7 @@ BuildResult makeBaseSymbol({
             italic: italic,
             skew: charMetrics.skew.cssEm.toLpUnder(options),
             widget: makeChar(symbol, font, charMetrics, options,
-                needItalic: mode == Mode.math),
+                needItalic: mode == Mode.math, onTap: onTap),
           );
         } else if (ligatures.containsKey(symbol) &&
             font.fontFamily == 'Typewriter') {
@@ -72,8 +72,9 @@ BuildResult makeBaseSymbol({
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: expandedText
-                  .map((e) =>
-                      makeChar(e, font!, lookupChar(e, font, mode), options))
+                  .map((e) => makeChar(
+                      e, font!, lookupChar(e, font, mode), options,
+                      onTap: onTap))
                   .toList(growable: false),
             ),
             italic: 0.0,
@@ -96,7 +97,7 @@ BuildResult makeBaseSymbol({
     return BuildResult(
       options: options,
       widget: makeChar(char, defaultFont, characterMetrics, options,
-          needItalic: mode == Mode.math),
+          needItalic: mode == Mode.math, onTap: onTap),
       italic: italic,
       skew: characterMetrics?.skew.cssEm.toLpUnder(options) ?? 0.0,
     );
@@ -122,16 +123,18 @@ BuildResult makeBaseSymbol({
     italic: 0.0,
     skew: 0.0,
     widget: makeChar(symbol, const FontOptions(), null, options,
-        needItalic: mode == Mode.math),
+        needItalic: mode == Mode.math, onTap: onTap),
   );
 }
 
 Widget makeChar(String character, FontOptions font,
     CharacterMetrics? characterMetrics, MathOptions options,
-    {bool needItalic = false}) {
+    {bool needItalic = false, Function(int? index)? onTap}) {
   final charWidget = GestureDetector(
     onTap: () {
-      print("TABBED1");
+      if (onTap != null) {
+        onTap(null);
+      }
     },
     child: ResetDimension(
       height: characterMetrics?.height.cssEm.toLpUnder(options),

@@ -10,7 +10,8 @@ import '../syntax_tree.dart';
 class CursorNode extends LeafNode {
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     final baselinePart = 1 - options.fontMetrics.axisHeight / 2;
     final height = options.fontSize * baselinePart * options.sizeMultiplier;
     final baselineDistance = height * baselinePart;

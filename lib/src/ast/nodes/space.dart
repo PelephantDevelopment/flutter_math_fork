@@ -63,7 +63,8 @@ class SpaceNode extends LeafNode {
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     if (alignerOrSpacer == true) {
       return BuildResult(
         options: options,

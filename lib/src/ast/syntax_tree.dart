@@ -28,8 +28,11 @@ class SyntaxTree {
   /// Root of the green tree
   final EquationRowNode greenRoot;
 
+  final Function(int? index)? onTap;
+
   SyntaxTree({
     required this.greenRoot,
+    this.onTap,
   });
 
   /// Root of the red tree
@@ -116,7 +119,8 @@ class SyntaxTree {
   }
 
   // Build widget tree
-  Widget buildWidget(MathOptions options) => root.buildWidget(options).widget;
+  Widget buildWidget(MathOptions options, {Function(int? index)? onTap}) =>
+      root.buildWidget(options, onTap: onTap).widget;
 }
 
 /// Red Node. Immutable facade for math nodes.
@@ -131,10 +135,12 @@ class SyntaxNode {
   final SyntaxNode? parent;
   final GreenNode value;
   final int pos;
+  final Function(int? index)? onTap;
   SyntaxNode({
     required this.parent,
     required this.value,
     required this.pos,
+    this.onTap,
   });
 
   /// Lazily evaluated children of current [SyntaxNode]
@@ -166,7 +172,7 @@ class SyntaxNode {
   /// - If [GreenNode.shouldRebuildWidget], force rebuild
   /// - Call [buildWidget] on [children]. If the results are identical to the
   /// results returned by [buildWidget] called last time, then bypass.
-  BuildResult buildWidget(MathOptions options) {
+  BuildResult buildWidget(MathOptions options, {Function(int? index)? onTap}) {
     if (value is PositionDependentMixin) {
       (value as PositionDependentMixin).updatePos(pos);
     }
@@ -187,14 +193,22 @@ class SyntaxNode {
     return bypassRebuild
         ? value._oldBuildResult!
         : (value._oldBuildResult =
-            value.buildWidget(options, newChildBuildResults));
+            value.buildWidget(options, newChildBuildResults, onTap: onTap));
   }
 
   List<BuildResult?> _buildChildWidgets(List<MathOptions> childOptions) {
     assert(children.length == childOptions.length);
     if (children.isEmpty) return const [];
-    return List.generate(children.length,
-        (index) => children[index]?.buildWidget(childOptions[index]),
+    return List.generate(
+        children.length,
+        (index) => children[index]?.buildWidget(
+              childOptions[index],
+              onTap: (i) {
+                if (onTap != null) {
+                  onTap!(index);
+                }
+              },
+            ),
         growable: false);
   }
 }
@@ -255,7 +269,8 @@ abstract class GreenNode {
   /// Please ensure [children] works in the same order as [updateChildren],
   /// [computeChildOptions], and [buildWidget].
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults);
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {Function(int? index)? onTap});
 
   /// Whether the specific [MathOptions] parameters that this node directly
   /// depends upon have changed.
@@ -406,7 +421,8 @@ abstract class TransparentNode extends ParentableNode<GreenNode>
 
   @override
   BuildResult buildWidget(
-          MathOptions options, List<BuildResult?> childBuildResults) =>
+          MathOptions options, List<BuildResult?> childBuildResults,
+          {Function(int? index)? onTap}) =>
       BuildResult(
         widget: const Text('This widget should not appear. '
             'It means one of FlutterMath\'s AST nodes '
@@ -483,7 +499,8 @@ class EquationRowNode extends ParentableNode<GreenNode>
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {Function(int? index)? onTap}) {
     final flattenedBuildResults = childBuildResults
         .expand((result) => result!.results ?? [result])
         .toList(growable: false);
@@ -813,7 +830,6 @@ enum AtomType {
   inner,
 
   spacing, // symbols
-
 }
 
 /// Only for improvisional use during parsing. Do not use.
@@ -823,7 +839,8 @@ class TemporaryNode extends LeafNode {
 
   @override
   BuildResult buildWidget(
-          MathOptions options, List<BuildResult?> childBuildResults) =>
+          MathOptions options, List<BuildResult?> childBuildResults,
+          {Function(int? index)? onTap}) =>
       throw UnsupportedError('Temporary node $runtimeType encountered.');
 
   @override

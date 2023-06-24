@@ -36,17 +36,21 @@ class SymbolNode extends LeafNode {
 
   // bool get noBreak => symbol == '\u00AF';
 
+  final Function()? onTap;
+
   SymbolNode({
     required this.symbol,
     this.variantForm = false,
     this.overrideAtomType,
     this.overrideFont,
     this.mode = Mode.math,
+    this.onTap,
   }) : assert(symbol.isNotEmpty);
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {Function(int? index)? onTap}) {
     final expanded = symbol.runes.expand((code) {
       final ch = String.fromCharCode(code);
       return unicodeSymbols[ch]?.split('') ?? [ch];
@@ -55,13 +59,13 @@ class SymbolNode extends LeafNode {
     // If symbol is single code
     if (expanded.length == 1) {
       return makeBaseSymbol(
-        symbol: expanded[0],
-        variantForm: variantForm,
-        atomType: atomType,
-        overrideFont: overrideFont,
-        mode: mode,
-        options: options,
-      );
+          symbol: expanded[0],
+          variantForm: variantForm,
+          atomType: atomType,
+          overrideFont: overrideFont,
+          mode: mode,
+          options: options,
+          onTap: onTap);
     } else if (expanded.length > 1) {
       if (isCombiningMark(expanded[1])) {
         if (expanded[0] == 'i') {

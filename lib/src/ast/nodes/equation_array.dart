@@ -44,7 +44,8 @@ class EquationArrayNode extends SlotableNode<EquationRowNode?> {
 
   @override
   BuildResult buildWidget(
-          MathOptions options, List<BuildResult?> childBuildResults) =>
+          MathOptions options, List<BuildResult?> childBuildResults,
+          {dynamic Function(int?)? onTap}) =>
       BuildResult(
         options: options,
         widget: ShiftBaseline(

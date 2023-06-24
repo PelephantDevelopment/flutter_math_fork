@@ -146,7 +146,8 @@ class MatrixNode extends SlotableNode<EquationRowNode?> {
 
   @override
   BuildResult buildWidget(
-      MathOptions options, List<BuildResult?> childBuildResults) {
+      MathOptions options, List<BuildResult?> childBuildResults,
+      {dynamic Function(int?)? onTap}) {
     assert(childBuildResults.length == rows * cols);
     // Flutter's Table does not provide fine-grained control of borders
     return BuildResult(
