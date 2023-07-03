@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/min_dimension.dart';
 import '../../render/layout/vlist.dart';
@@ -25,7 +26,7 @@ class UnderNode extends SlotableNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     final spacing = options.fontMetrics.bigOpSpacing5.cssEm.toLpUnder(options);
     return BuildResult(
       italic: 0.0,

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/symbols/make_symbol.dart';
 import '../../utils/unicode_literal.dart';
@@ -50,7 +51,8 @@ class SymbolNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {Function(int? index, SyntaxNode? parent)? onTap}) {
+      {Function(int? index, SyntaxNode? parent, List<ClickOnCharTracker> list)?
+          onTap}) {
     final expanded = symbol.runes.expand((code) {
       final ch = String.fromCharCode(code);
       return unicodeSymbols[ch]?.split('') ?? [ch];

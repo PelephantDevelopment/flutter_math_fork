@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/custom_layout.dart';
 import '../../render/layout/shift_baseline.dart';
@@ -147,7 +148,7 @@ class MatrixNode extends SlotableNode<EquationRowNode?> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     assert(childBuildResults.length == rows * cols);
     // Flutter's Table does not provide fine-grained control of borders
     return BuildResult(

@@ -3,6 +3,7 @@ import '../options.dart';
 import '../style.dart';
 import '../syntax_tree.dart';
 import 'symbol.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 /// Node for postscripts and prescripts
 ///
@@ -44,7 +45,8 @@ class MultiscriptsNode extends SlotableNode<EquationRowNode?> {
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {dynamic Function(int?, SyntaxNode?)? onTap}) =>
+          {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)?
+              onTap}) =>
       BuildResult(
         options: options,
         widget: Multiscripts(

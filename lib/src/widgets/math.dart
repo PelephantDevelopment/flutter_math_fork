@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 import 'package:provider/provider.dart';
 
 import '../ast/options.dart';
@@ -49,7 +50,8 @@ class Math extends StatelessWidget {
       : assert(ast != null || parseError != null),
         super(key: key);
 
-  final Function(int? index, SyntaxNode? parent)? onTap;
+  final Function(int? index, SyntaxNode? parent, List<ClickOnCharTracker> list)?
+      onTap;
 
   /// The equation to display.
   ///
@@ -143,7 +145,8 @@ class Math extends StatelessWidget {
     TexParserSettings settings = const TexParserSettings(),
     double? textScaleFactor,
     MathOptions? options,
-    Function(int? index, SyntaxNode? parent)? onTap,
+    Function(int? index, SyntaxNode? parent, List<ClickOnCharTracker> list)?
+        onTap,
   }) {
     SyntaxTree? ast;
     ParseException? parseError;

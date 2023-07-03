@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/reset_baseline.dart';
 import '../options.dart';
@@ -64,7 +65,7 @@ class SpaceNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     if (alignerOrSpacer == true) {
       return BuildResult(
         options: options,

@@ -5,6 +5,7 @@ import '../options.dart';
 import '../size.dart';
 import '../syntax_tree.dart';
 import 'matrix.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 /// Equantion array node. Brings support for equationa alignment.
 class EquationArrayNode extends SlotableNode<EquationRowNode?> {
@@ -45,7 +46,8 @@ class EquationArrayNode extends SlotableNode<EquationRowNode?> {
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {dynamic Function(int?, SyntaxNode?)? onTap}) =>
+          {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)?
+              onTap}) =>
       BuildResult(
         options: options,
         widget: ShiftBaseline(

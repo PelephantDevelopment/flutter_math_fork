@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../font/metrics/font_metrics.dart';
 import '../../render/layout/line.dart';
@@ -51,7 +52,7 @@ class NaryOperatorNode extends SlotableNode<EquationRowNode?> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     final large =
         allowLargeOp && (options.style.size == MathStyle.display.size);
     final font = large

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../ast/options.dart';
 import '../../ast/size.dart';
@@ -18,7 +19,8 @@ BuildResult makeBaseSymbol(
     required Mode mode,
     FontOptions? overrideFont,
     required MathOptions options,
-    Function(int? index, SyntaxNode? parent)? onTap}) {
+    Function(int? index, SyntaxNode? parent, List<ClickOnCharTracker> list)?
+        onTap}) {
   // First lookup the render config table. We need the information
   var symbolRenderConfig = symbolRenderConfigs[symbol];
   if (symbolRenderConfig != null) {
@@ -130,11 +132,13 @@ BuildResult makeBaseSymbol(
 Widget makeChar(String character, FontOptions font,
     CharacterMetrics? characterMetrics, MathOptions options,
     {bool needItalic = false,
-    Function(int? index, SyntaxNode? parent)? onTap}) {
+    Function(int? index, SyntaxNode? parent, List<ClickOnCharTracker> list)?
+        onTap}) {
   final charWidget = GestureDetector(
     onTap: () {
+      GlobalData.clickOnCharTrackerList = [];
       if (onTap != null) {
-        onTap(null, null);
+        onTap(null, null, []);
       }
     },
     child: ResetDimension(

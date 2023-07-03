@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/custom_layout.dart';
 import '../options.dart';
@@ -39,7 +40,8 @@ class FracNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {dynamic Function(int?, SyntaxNode?)? onTap}) =>
+          {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)?
+              onTap}) =>
       BuildResult(
         options: options,
         widget: CustomLayout(

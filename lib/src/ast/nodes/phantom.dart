@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/reset_dimension.dart';
 import '../options.dart';
@@ -36,7 +37,7 @@ class PhantomNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     final phantomRedNode =
         SyntaxNode(parent: null, value: phantomChild, pos: 0);
     final phantomResult = phantomRedNode.buildWidget(options);

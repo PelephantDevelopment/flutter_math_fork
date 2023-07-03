@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 import '../../render/layout/layout_builder_baseline.dart';
 import '../../render/layout/shift_baseline.dart';
@@ -32,7 +33,7 @@ class StretchyOpNode extends SlotableNode<EquationRowNode?> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?, SyntaxNode?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)? onTap}) {
     final verticalPadding = 2.0.mu.toLpUnder(options);
     return BuildResult(
       options: options,

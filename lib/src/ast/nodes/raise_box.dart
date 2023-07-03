@@ -2,6 +2,7 @@ import '../../render/layout/shift_baseline.dart';
 import '../options.dart';
 import '../size.dart';
 import '../syntax_tree.dart';
+import 'package:flutter_math_fork/global_custom/global_data.dart';
 
 /// Raise box node which vertically displace its child.
 ///
@@ -21,7 +22,8 @@ class RaiseBoxNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {dynamic Function(int?, SyntaxNode?)? onTap}) =>
+          {dynamic Function(int?, SyntaxNode?, List<ClickOnCharTracker>)?
+              onTap}) =>
       BuildResult(
         options: options,
         widget: ShiftBaseline(
