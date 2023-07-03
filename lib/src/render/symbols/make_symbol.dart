@@ -18,7 +18,7 @@ BuildResult makeBaseSymbol(
     required Mode mode,
     FontOptions? overrideFont,
     required MathOptions options,
-    Function(int? index)? onTap}) {
+    Function(int? index, SyntaxNode? parent)? onTap}) {
   // First lookup the render config table. We need the information
   var symbolRenderConfig = symbolRenderConfigs[symbol];
   if (symbolRenderConfig != null) {
@@ -129,11 +129,12 @@ BuildResult makeBaseSymbol(
 
 Widget makeChar(String character, FontOptions font,
     CharacterMetrics? characterMetrics, MathOptions options,
-    {bool needItalic = false, Function(int? index)? onTap}) {
+    {bool needItalic = false,
+    Function(int? index, SyntaxNode? parent)? onTap}) {
   final charWidget = GestureDetector(
     onTap: () {
       if (onTap != null) {
-        onTap(null);
+        onTap(null, null);
       }
     },
     child: ResetDimension(

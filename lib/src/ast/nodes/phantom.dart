@@ -36,7 +36,7 @@ class PhantomNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     final phantomRedNode =
         SyntaxNode(parent: null, value: phantomChild, pos: 0);
     final phantomResult = phantomRedNode.buildWidget(options);

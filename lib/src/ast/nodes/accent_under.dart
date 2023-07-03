@@ -26,7 +26,7 @@ class AccentUnderNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     final baseResult = childBuildResults[0]!;
     return BuildResult(
       options: options,

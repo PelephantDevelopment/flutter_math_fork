@@ -28,7 +28,7 @@ class SyntaxTree {
   /// Root of the green tree
   final EquationRowNode greenRoot;
 
-  final Function(int? index)? onTap;
+  final Function(int? index, SyntaxNode? parent)? onTap;
 
   SyntaxTree({
     required this.greenRoot,
@@ -119,7 +119,8 @@ class SyntaxTree {
   }
 
   // Build widget tree
-  Widget buildWidget(MathOptions options, {Function(int? index)? onTap}) =>
+  Widget buildWidget(MathOptions options,
+          {Function(int? index, SyntaxNode? parent)? onTap}) =>
       root.buildWidget(options, onTap: onTap).widget;
 }
 
@@ -135,7 +136,7 @@ class SyntaxNode {
   final SyntaxNode? parent;
   final GreenNode value;
   final int pos;
-  final Function(int? index)? onTap;
+  final Function(int? index, SyntaxNode? parent)? onTap;
   SyntaxNode({
     required this.parent,
     required this.value,
@@ -172,7 +173,8 @@ class SyntaxNode {
   /// - If [GreenNode.shouldRebuildWidget], force rebuild
   /// - Call [buildWidget] on [children]. If the results are identical to the
   /// results returned by [buildWidget] called last time, then bypass.
-  BuildResult buildWidget(MathOptions options, {Function(int? index)? onTap}) {
+  BuildResult buildWidget(MathOptions options,
+      {Function(int? index, SyntaxNode? parent)? onTap}) {
     if (value is PositionDependentMixin) {
       (value as PositionDependentMixin).updatePos(pos);
     }
@@ -197,16 +199,19 @@ class SyntaxNode {
   }
 
   List<BuildResult?> _buildChildWidgets(List<MathOptions> childOptions,
-      {Function(int? index)? onTap}) {
+      {Function(int? index, SyntaxNode? parent)? onTap}) {
+    //TODO: give not only index but also type of widget, function or single value
     assert(children.length == childOptions.length);
     if (children.isEmpty) return const [];
     return List.generate(
         children.length,
         (index) => children[index]?.buildWidget(
               childOptions[index],
-              onTap: (i) {
+              onTap: (i, p) {
+                // the given values i and p must be null as just here the values can be filled
+                // the function just have to be invoked before where the GestureDetector widget is placed
                 if (onTap != null) {
-                  onTap(index);
+                  onTap(index, parent);
                 }
               },
             ),
@@ -271,7 +276,7 @@ abstract class GreenNode {
   /// [computeChildOptions], and [buildWidget].
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {Function(int? index)? onTap});
+      {Function(int? index, SyntaxNode? parent)? onTap});
 
   /// Whether the specific [MathOptions] parameters that this node directly
   /// depends upon have changed.
@@ -423,7 +428,7 @@ abstract class TransparentNode extends ParentableNode<GreenNode>
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {Function(int? index)? onTap}) =>
+          {Function(int? index, SyntaxNode? parent)? onTap}) =>
       BuildResult(
         widget: const Text('This widget should not appear. '
             'It means one of FlutterMath\'s AST nodes '
@@ -501,7 +506,7 @@ class EquationRowNode extends ParentableNode<GreenNode>
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {Function(int? index)? onTap}) {
+      {Function(int? index, SyntaxNode? parent)? onTap}) {
     final flattenedBuildResults = childBuildResults
         .expand((result) => result!.results ?? [result])
         .toList(growable: false);
@@ -841,7 +846,7 @@ class TemporaryNode extends LeafNode {
   @override
   BuildResult buildWidget(
           MathOptions options, List<BuildResult?> childBuildResults,
-          {Function(int? index)? onTap}) =>
+          {Function(int? index, SyntaxNode? parent)? onTap}) =>
       throw UnsupportedError('Temporary node $runtimeType encountered.');
 
   @override

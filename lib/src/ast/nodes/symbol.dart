@@ -50,7 +50,7 @@ class SymbolNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {Function(int? index)? onTap}) {
+      {Function(int? index, SyntaxNode? parent)? onTap}) {
     final expanded = symbol.runes.expand((code) {
       final ch = String.fromCharCode(code);
       return unicodeSymbols[ch]?.split('') ?? [ch];

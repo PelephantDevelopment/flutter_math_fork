@@ -11,7 +11,7 @@ class CursorNode extends LeafNode {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     final baselinePart = 1 - options.fontMetrics.axisHeight / 2;
     final height = options.fontSize * baselinePart * options.sizeMultiplier;
     final baselineDistance = height * baselinePart;

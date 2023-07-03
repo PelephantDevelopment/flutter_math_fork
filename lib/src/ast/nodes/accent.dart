@@ -44,7 +44,7 @@ class AccentNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     // Checking of character box is done automatically by the passing of
     // BuildResult, so we don't need to check it here.
     final baseResult = childBuildResults[0]!;

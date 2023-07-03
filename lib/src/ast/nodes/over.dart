@@ -30,7 +30,7 @@ class OverNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     final spacing = options.fontMetrics.bigOpSpacing5.cssEm.toLpUnder(options);
     return BuildResult(
       options: options,

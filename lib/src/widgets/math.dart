@@ -49,7 +49,7 @@ class Math extends StatelessWidget {
       : assert(ast != null || parseError != null),
         super(key: key);
 
-  final Function(int? index)? onTap;
+  final Function(int? index, SyntaxNode? parent)? onTap;
 
   /// The equation to display.
   ///
@@ -143,7 +143,7 @@ class Math extends StatelessWidget {
     TexParserSettings settings = const TexParserSettings(),
     double? textScaleFactor,
     MathOptions? options,
-    Function(int? index)? onTap,
+    Function(int? index, SyntaxNode? parent)? onTap,
   }) {
     SyntaxTree? ast;
     ParseException? parseError;

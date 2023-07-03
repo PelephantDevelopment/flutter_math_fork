@@ -43,7 +43,7 @@ class LeftRightNode extends SlotableNode<EquationRowNode> {
   @override
   BuildResult buildWidget(
       MathOptions options, List<BuildResult?> childBuildResults,
-      {dynamic Function(int?)? onTap}) {
+      {dynamic Function(int?, SyntaxNode?)? onTap}) {
     final numElements = 2 + body.length + middle.length;
     final a = options.fontMetrics.axisHeight.cssEm.toLpUnder(options);
 
