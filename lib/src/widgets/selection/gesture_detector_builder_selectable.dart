@@ -35,7 +35,7 @@ class SelectableMathSelectionGestureDetectorBuilder
   }
 
   @override
-  void onSingleTapUp(TapDragUpDetails details) {
+  void onSingleTapUp(details) {
     delegate.hide();
     if (delegate.selectionEnabled) {
       switch (Theme.of(delegate.context).platform) {
